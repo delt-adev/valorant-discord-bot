@@ -49,38 +49,119 @@ function showNotice(message, isError = false) {
   notice.style.color = isError ? "#ff4655" : "#c3a56f";
 }
 
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
 function renderAccounts(accounts) {
   accountList.replaceChildren();
 
   if (accounts.length === 0) {
-    const empty = document.createElement("p");
-    empty.className = "account-empty";
-    empty.textContent = "등록된 계정이 없습니다.";
-    accountList.appendChild(empty);
+    accountList.appendChild(
+      createElement("p", "account-empty", "등록된 계정이 없습니다.")
+    );
     return;
   }
 
   for (const account of accounts) {
-    const item = document.createElement("article");
-    item.className = "account-item";
+    const item = createElement("article", "account-item");
 
-    const info = document.createElement("div");
-    info.className = "account-info";
+    const content = createElement("div", "account-content");
 
-    const name = document.createElement("strong");
-    name.textContent = `${account.game_name}#${account.tag_line}`;
+    const info = createElement("div", "account-info");
+    info.append(
+      createElement("strong", "", `${account.game_name}#${account.tag_line}`),
+      createElement("span", "", `${account.region.toUpperCase()} · 테스트 계정`)
+    );
 
-    const detail = document.createElement("span");
-    detail.textContent = `${account.region.toUpperCase()} · 테스트 계정`;
+    const webhookSection = createElement("div", "webhook-section");
 
-    info.append(name, detail);
+    const webhookLabel = createElement("label", "", "Discord Webhook URL");
+    const webhookInput = createElement("input", "webhook-input");
+    webhookInput.type = "password";
+    webhookInput.placeholder = "https://discord.com/api/webhooks/...";
+    webhookInput.autocomplete = "off";
 
-    const deleteButton = document.createElement("button");
-    deleteButton.type = "button";
-    deleteButton.className = "delete-button";
-    deleteButton.textContent = "삭제";
+    const webhookActions = createElement("div", "webhook-actions");
 
-    deleteButton.addEventListener("click", async () => {
+    const saveButton = createElement("button", "webhook-save", "Webhook 저장");
+    saveButton.type = "button";
+
+    const deleteWebhookButton = createElement(
+      "button",
+      "webhook-delete",
+      "Webhook 삭제"
+    );
+    deleteWebhookButton.type = "button";
+
+    const webhookStatus = createElement(
+      "span",
+      "webhook-status",
+      account.webhook_configured
+        ? "Webhook 등록됨"
+        : "Webhook 미등록"
+    );
+
+    saveButton.addEventListener("click", async () => {
+      const webhookUrl = webhookInput.value.trim();
+
+      if (!webhookUrl) {
+        showNotice("Webhook URL을 입력해 주세요.", true);
+        return;
+      }
+
+      saveButton.disabled = true;
+
+      try {
+        await api(`/api/accounts/${account.id}/webhook`, {
+          method: "POST",
+          body: JSON.stringify({ webhook_url: webhookUrl })
+        });
+
+        webhookInput.value = "";
+        webhookStatus.textContent = "Webhook 등록됨";
+        showNotice("Discord Webhook을 암호화하여 저장했습니다.");
+      } catch (error) {
+        showNotice(`Webhook 저장 실패: ${error.message}`, true);
+      } finally {
+        saveButton.disabled = false;
+      }
+    });
+
+    deleteWebhookButton.addEventListener("click", async () => {
+      if (!confirm("등록된 Discord Webhook을 삭제할까요?")) return;
+
+      deleteWebhookButton.disabled = true;
+
+      try {
+        await api(`/api/accounts/${account.id}/webhook`, {
+          method: "DELETE"
+        });
+
+        webhookStatus.textContent = "Webhook 미등록";
+        webhookInput.value = "";
+        showNotice("Discord Webhook을 삭제했습니다.");
+      } catch (error) {
+        showNotice(`Webhook 삭제 실패: ${error.message}`, true);
+      } finally {
+        deleteWebhookButton.disabled = false;
+      }
+    });
+
+    webhookActions.append(saveButton, deleteWebhookButton);
+    webhookSection.append(webhookLabel, webhookInput, webhookActions, webhookStatus);
+
+    const deleteAccountButton = createElement(
+      "button",
+      "delete-button",
+      "계정 삭제"
+    );
+    deleteAccountButton.type = "button";
+
+    deleteAccountButton.addEventListener("click", async () => {
       if (!confirm(`${account.game_name}#${account.tag_line} 계정을 삭제할까요?`)) {
         return;
       }
@@ -97,7 +178,8 @@ function renderAccounts(accounts) {
       }
     });
 
-    item.append(info, deleteButton);
+    content.append(info, webhookSection);
+    item.append(content, deleteAccountButton);
     accountList.appendChild(item);
   }
 }
