@@ -16,6 +16,7 @@ request = urllib.request.Request(
     headers={
         "Authorization": f"Bearer {poll_secret}",
         "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (compatible; ValorantMatchChecker/1.0)",
     },
     method="POST",
 )
