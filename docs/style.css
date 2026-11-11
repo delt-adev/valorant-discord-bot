@@ -1,9 +1,299 @@
-:root{color-scheme:dark;--bg:#0b0e14;--panel:#131923;--line:#263142;--muted:#9aa7b8;--red:#ff4655;--white:#f4f6fa}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#25202a 0,transparent 38%),var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
-.shell{width:min(920px,calc(100% - 40px));margin:auto}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
-.brand{font-weight:900;letter-spacing:.08em;color:var(--white);text-decoration:none}.brand span{color:var(--red)}.status,.tag{font-size:11px;letter-spacing:.12em;color:var(--muted)}.status i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e4a94b;margin-right:8px}
-.hero{padding:88px 0 66px;max-width:690px}.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--red);font-weight:800}.hero h1{font-size:clamp(38px,7vw,64px);line-height:1.08;letter-spacing:-.045em;margin:18px 0}.hero h1 span{color:#aeb8c8}.intro{color:var(--muted);line-height:1.8;max-width:540px}
-button{margin-top:20px;background:var(--red);border:0;border-radius:5px;padding:15px 22px;color:white;font-weight:800;font-size:14px}button:disabled{opacity:.48;cursor:not-allowed}.notice{font-size:12px;color:#c3a56f}
-.panel{background:linear-gradient(145deg,#171f2b,#111720);border:1px solid var(--line);border-radius:10px;padding:28px}.panel-head{display:flex;align-items:center;justify-content:space-between}.panel h2{margin:8px 0 0;font-size:23px}.tag{border:1px solid var(--line);border-radius:4px;padding:6px 9px}
-.empty{min-height:210px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}.empty-icon{font-size:38px;color:#64748b;margin-bottom:12px}.empty p{max-width:420px;color:var(--muted);font-size:13px;line-height:1.7}
-footer{padding:28px 0 40px;color:#657184;font-size:11px;text-align:center}
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0e14;
+  --panel: #131923;
+  --line: #263142;
+  --muted: #9aa7b8;
+  --red: #ff4655;
+  --white: #f4f6fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 80% 0%, #25202a 0, transparent 38%),
+    var(--bg);
+  color: var(--white);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.shell {
+  width: min(920px, calc(100% - 40px));
+  margin: auto;
+}
+
+.topbar {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-weight: 900;
+  letter-spacing: .08em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.brand span {
+  color: var(--red);
+}
+
+.status,
+.tag {
+  font-size: 11px;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+
+.status i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e4a94b;
+  margin-right: 8px;
+}
+
+.hero {
+  padding: 88px 0 66px;
+  max-width: 690px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--red);
+  font-weight: 800;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  margin: 18px 0;
+}
+
+.hero h1 span {
+  color: #aeb8c8;
+}
+
+.intro {
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 540px;
+}
+
+button {
+  border: 0;
+  border-radius: 5px;
+  padding: 14px 20px;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+button:disabled {
+  opacity: .48;
+  cursor: not-allowed;
+}
+
+.hero button {
+  margin-top: 20px;
+  background: var(--red);
+}
+
+.notice {
+  font-size: 12px;
+  color: #c3a56f;
+  min-height: 18px;
+}
+
+.panel {
+  background: linear-gradient(145deg, #171f2b, #111720);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel h2 {
+  margin: 8px 0 0;
+  font-size: 23px;
+}
+
+.tag {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 6px 9px;
+}
+
+.account-form {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 130px;
+}
+
+.input-group label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  background: #0b111a;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 12px;
+  color: var(--white);
+  outline: none;
+  font-size: 14px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--red);
+}
+
+.tag-separator {
+  color: var(--muted);
+  padding-bottom: 13px;
+}
+
+.tag-input {
+  flex: .65;
+}
+
+.region-input {
+  flex: 1.1;
+}
+
+.add-button {
+  height: 44px;
+  background: var(--red);
+  white-space: nowrap;
+}
+
+.add-button:hover,
+.hero button:hover:not(:disabled) {
+  background: #e63b49;
+}
+
+.account-section {
+  margin-top: 42px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.account-section h3 {
+  margin: 0 0 18px;
+  font-size: 15px;
+}
+
+.account-empty {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 28px 0;
+}
+
+.account-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  background: #0d141e;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.account-info strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.account-info span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.delete-button {
+  background: #29202a;
+  border: 1px solid #49303a;
+  color: #ff7883;
+  padding: 9px 14px;
+  font-size: 12px;
+}
+
+.delete-button:hover {
+  background: #42232c;
+}
+
+footer {
+  padding: 28px 0 40px;
+  color: #657184;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .hero {
+    padding: 60px 0 45px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .account-form {
+    gap: 12px;
+  }
+
+  .input-group {
+    flex: 1 1 40%;
+  }
+
+  .region-input {
+    flex: 1 1 100%;
+  }
+
+  .add-button {
+    width: 100%;
+  }
+}
