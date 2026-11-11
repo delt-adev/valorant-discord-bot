@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VALORANT match notification dashboard">
+  <title>VALORANT Match Notifier</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="./">VALORANT <span>TRACKER</span></a>
+      <span class="status"><i></i> SERVICE SETUP</span>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">MATCH NOTIFICATION SYSTEM</p>
+      <h1>내 경기 기록을<br><span>Discord로 받아보세요.</span></h1>
+      <p class="intro">Riot 계정을 연동하면 새로운 경기 결과를 지정한 Discord 채널로 전달하는 서비스입니다.</p>
+      <button id="login" disabled>Riot 계정으로 로그인</button>
+      <p class="notice" id="notice">Riot Sign On 및 VALORANT API 사용 승인을 준비 중입니다.</p>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <div><p class="eyebrow">DASHBOARD</p><h2>계정 관리</h2></div>
+        <span class="tag">PREVIEW</span>
+      </div>
+      <div class="empty">
+        <div class="empty-icon">◎</div>
+        <strong>아직 연동된 계정이 없습니다.</strong>
+        <p>Riot 공식 로그인을 연결한 후 이곳에서 계정과 알림 설정을 관리할 수 있습니다.</p>
+      </div>
+    </section>
+    <footer>Unofficial community project. Not affiliated with Riot Games.</footer>
+  </main>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
